@@ -30,7 +30,7 @@ class gliderApiModel {
 
     public function insertGlider($name, $description, $difficulty, $price) {
         $query = $this->db->prepare("INSERT INTO paraglider (name, description, difficulty, price) VALUES (?, ?, ?, ?)");
-        $query->execute([$name, $description, $difficulty, false]);
+        $query->execute([$name, $description, $difficulty, $price]);
 
         return $this->db->lastInsertId();
     }
@@ -40,11 +40,5 @@ class gliderApiModel {
         $query->execute([$id]);
     }
 
-
-    // public function finalize($id) {
-    //     $query = $this->db->prepare('UPDATE paraglider SET finalizada = 1 WHERE id = ?');
-    //     $query->execute([$id]);
-    //     // var_dump($query->errorInfo()); // y eliminar la redireccion
-    // }
 
 }

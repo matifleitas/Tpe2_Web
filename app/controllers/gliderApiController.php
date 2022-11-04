@@ -2,7 +2,7 @@
 require_once 'app/models/gliderApiModel.php';
 require_once 'app/views/gliderApiView.php';
 
-class paraglidingApiController {
+class gliderApiController {
     private $model;
     private $view;
 
@@ -33,7 +33,7 @@ class paraglidingApiController {
         if ($glider)
             $this->view->response($glider);
         else 
-            $this->view->response("La tarea con el id=$id no existe", 404);
+            $this->view->response("El parapente con el id=$id no existe", 404);
     }
 
     public function deleteGlider($params = null) {
@@ -44,16 +44,16 @@ class paraglidingApiController {
             $this->model->delete($id);
             $this->view->response($glider);
         } else 
-            $this->view->response("La tarea con el id=$id no existe", 404);
+            $this->view->response("El parapente con el id=$id no existe", 404);
     }
 
     public function insertGlider($params = null) {
         $glider = $this->getData();
 
-        if (empty($glider->tittle) || empty($glider->description))  {
+        if (empty($glider->name) || empty($glider->description) || empty($glider->difficulty) || empty($glider->price))  {
             $this->view->response("Complete los datos", 400);
         } else {
-            $id = $this->model->insertGlider($glider->name, $glider->descrption, $glider->difficulty, $glider->price);
+            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->difficulty, $glider->price);
             $glider = $this->model->getGliderById($id);
             $this->view->response($glider, 201);
         }
