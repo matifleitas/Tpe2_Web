@@ -40,5 +40,4 @@ class gliderApiModel {
         $query->execute([$id]);
     }
 
-
 }

@@ -33,7 +33,7 @@ class gliderApiController {
         if ($glider)
             $this->view->response($glider);
         else 
-            $this->view->response("El parapente con el id=$id no existe", 404);
+            $this->view->response("El parapente con el id: $id no existe", 404);
     }
 
     public function deleteGlider($params = null) {
@@ -57,6 +57,12 @@ class gliderApiController {
             $glider = $this->model->getGliderById($id);
             $this->view->response($glider, 201);
         }
+    }
+
+    public function ordenamientoGlider($params = null) {
+        $gliders = $this->model->getAll();
+
+
     }
 
 
