@@ -21,7 +21,7 @@ class categoryApiController {
 
     public function getCategories($params = null) {
         $categories = $this->model->getAllcategories();
-        $this->view->response($glideres);
+        $this->view->response($categories);
     }
 
     public function getCategory($params = null) {
