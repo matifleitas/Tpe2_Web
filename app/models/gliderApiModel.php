@@ -5,38 +5,64 @@ class gliderApiModel {
     private $db;
 
     public function __construct() {
-        $this->db = new PDO('mysql:host=localhost;'.'dbname=db_paragliders;charset=utf8', 'root', '');
+        $this->db = new PDO('mysql:host=localhost;'.'dbname=eagle;charset=utf8', 'root', '');
     }
     /**
      * Devuelve la lista de tareas completa.
     */
     public function getAll() {
-        $query = $this->db->prepare("SELECT * FROM paraglider");
+        $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+        FROM parapentes JOIN categoria
+        ON parapentes.id_category_fk = categoria.id_category");
         $query->execute();
 
-        $tasks = $query->fetchAll(PDO::FETCH_OBJ);
+        $gliders = $query->fetchAll(PDO::FETCH_OBJ);
 
-        return $tasks;
+        return $gliders;
     }
+
+    public function getGliderByOrder($sortedby, $order) {
+        $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+        FROM parapentes JOIN categoria
+        ON parapentes.id_category_fk = categoria.id_category ORDER BY $sortedby $order");
+        $query->execute();
+        $glidersByorder = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $glidersByorder;
+    }
+
+    // public function getGlidersForPage($start, $limitPage) {
+    //     $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+    //     FROM parapentes JOIN categoria
+    //     ON parapentes.id_category_fk = categoria.id_category LIMIT $start,$limitPage");
+    //     $query->execute();
+    //     $glidersForNumberPage = $query->fetchAll(PDO::FETCH_OBJ);
+
+    //     return glidersForNumberPage;
+
+    
+
+    // public function getGlidersPagination()
 
     public function getGliderById($id) {
-        $query = $this->db->prepare("SELECT * FROM paraglider WHERE id_parapente = ?");
+        $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+        FROM parapentes JOIN categoria WHERE id_parapente = ?");
         $query->execute([$id]);
-        $task = $query->fetch(PDO::FETCH_OBJ);
+        $glider = $query->fetch(PDO::FETCH_OBJ);
         
-        return $task;
+        return $glider;
     }
 
 
-    public function insertGlider($name, $description, $difficulty, $price) {
-        $query = $this->db->prepare("INSERT INTO paraglider (name, description, difficulty, price) VALUES (?, ?, ?, ?)");
-        $query->execute([$name, $description, $difficulty, $price]);
+    public function insertGlider($name, $description, $difficulty, $price, $id_category_fk, $image) {
+        $query = $this->db->prepare("INSERT INTO parapentes (name, description, difficulty, price, id_category_fk, image) VALUES (?, ?, ?, ?, ?, ?)");
+        $query->execute([$name, $description, $difficulty, $price, $id_category_fk, $image]);
 
         return $this->db->lastInsertId();
     }
 
     function delete($id) {
-        $query = $this->db->prepare('DELETE FROM paraglider WHERE id_parapente = ?');
+        $query = $this->db->prepare('DELETE FROM parapentes WHERE id_parapente = ?');
         $query->execute([$id]);
     }
 

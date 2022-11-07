@@ -20,9 +20,36 @@ class gliderApiController {
     }
 
     public function getGliders($params = null) {
-        $gliders = $this->model->getAll();
-        $this->view->response($gliders);
+        $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
+        // busqueda por order
+        $sortedby= '';
+        $order= '';
+        // $start = '';
+        // $limitPage = 3;
+            
+        if (array_key_exists('sort', $_GET)) {
+            $sortedby = $_GET['sort'];
+            if (array_key_exists('order', $_GET)) {
+                $order = $_GET['order'];
+                
+                $glidersByorder = $this->model->getGliderByOrder($sortedby, $order);
+                $this->view->response($glidersByorder);
+            }  
+        } else {
+            $gliders = $this->model->getAll();
+            $this->view->response($gliders);
+        }
+
+        // if (array_key_exists('start', $_GET)) {
+        //     $start = $_GET['start'];    
+        
+        // $glidersForNumberPage = $this->model->getGlidersForPage($start, $limitPage);
+        // $this->view->response($glidersForNumberPage);
+        // }
     }
+
+        // if (array_key_exists())
+
 
     public function getGlider($params = null) {
         // obtengo el id del arreglo de params
@@ -35,6 +62,7 @@ class gliderApiController {
         else 
             $this->view->response("El parapente con el id: $id no existe", 404);
     }
+
 
     public function deleteGlider($params = null) {
         $id = $params[':ID'];
@@ -50,20 +78,13 @@ class gliderApiController {
     public function insertGlider($params = null) {
         $glider = $this->getData();
 
-        if (empty($glider->name) || empty($glider->description) || empty($glider->difficulty) || empty($glider->price))  {
+        if (empty($glider->name) || empty($glider->description) || empty($glider->difficulty) || empty($glider->price) || empty($glider->id_category_fk))  {
             $this->view->response("Complete los datos", 400);
         } else {
-            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->difficulty, $glider->price);
+            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->difficulty, $glider->price, $glider->id_category_fk, $glider->image);
             $glider = $this->model->getGliderById($id);
             $this->view->response($glider, 201);
         }
     }
-
-    public function ordenamientoGlider($params = null) {
-        $gliders = $this->model->getAll();
-
-
-    }
-
 
 }
