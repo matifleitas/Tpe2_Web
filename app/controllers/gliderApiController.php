@@ -20,37 +20,37 @@ class gliderApiController {
     }
 
     public function getGliders($params = null) {
-        $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
-        // busqueda por order
+        // $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
+        
+        // $limit = 2; // limite de velas por pagina
+        // $num_page = '';
+        $category= '';
         $sortedby= '';
         $order= '';
-        // $start = '';
-        // $limitPage = 3;
-            
+
         if (array_key_exists('sort', $_GET)) {
             $sortedby = $_GET['sort'];
+            
             if (array_key_exists('order', $_GET)) {
                 $order = $_GET['order'];
                 
                 $glidersByorder = $this->model->getGliderByOrder($sortedby, $order);
                 $this->view->response($glidersByorder);
-            }  
+            }
+        } 
+        if (array_key_exists('category', $_GET)) {
+            $category = $_GET['category'];
+        
+            $glidersByCategory = $this->model->getGlidersByCategory($category);
+            $this->view->response($glidersByCategory);
+
         } else {
+
             $gliders = $this->model->getAll();
             $this->view->response($gliders);
-        }
-
-        // if (array_key_exists('start', $_GET)) {
-        //     $start = $_GET['start'];    
+        } 
+    } 
         
-        // $glidersForNumberPage = $this->model->getGlidersForPage($start, $limitPage);
-        // $this->view->response($glidersForNumberPage);
-        // }
-    }
-
-        // if (array_key_exists())
-
-
     public function getGlider($params = null) {
         // obtengo el id del arreglo de params
         $id = $params[':ID'];

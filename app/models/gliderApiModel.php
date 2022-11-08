@@ -7,9 +7,7 @@ class gliderApiModel {
     public function __construct() {
         $this->db = new PDO('mysql:host=localhost;'.'dbname=eagle;charset=utf8', 'root', '');
     }
-    /**
-     * Devuelve la lista de tareas completa.
-    */
+
     public function getAll() {
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria
@@ -31,19 +29,6 @@ class gliderApiModel {
         return $glidersByorder;
     }
 
-    // public function getGlidersForPage($start, $limitPage) {
-    //     $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
-    //     FROM parapentes JOIN categoria
-    //     ON parapentes.id_category_fk = categoria.id_category LIMIT $start,$limitPage");
-    //     $query->execute();
-    //     $glidersForNumberPage = $query->fetchAll(PDO::FETCH_OBJ);
-
-    //     return glidersForNumberPage;
-
-    
-
-    // public function getGlidersPagination()
-
     public function getGliderById($id) {
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria WHERE id_parapente = ?");
@@ -51,6 +36,16 @@ class gliderApiModel {
         $glider = $query->fetch(PDO::FETCH_OBJ);
         
         return $glider;
+    }
+
+    public function getGlidersByCategory($category) {
+        $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+        FROM parapentes JOIN categoria 
+        ON parapentes.id_category_fk = categoria.id_category WHERE categoria.type_paraglider = ?");
+        $query->execute([$category]);
+        $glidersByCategory = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $glidersByCategory;
     }
 
 
