@@ -20,9 +20,21 @@ class gliderApiModel {
     }
 
     public function getGliderByOrder($sortedby, $order) {
+        $querrys = [
+            "id_parapente" => "ORDER BY id_parapente",
+            "nombre" => "ORDER BY name",
+            "descripcion" => "ORDER BY description",
+            "dificultad" => "ORDER BY difficulty",
+            "precio" => "ORDER BY price"
+        ];
+        if (isset($querrys[$sortedby]))
+            $order_query = $querrys[$sortedby];
+        else 
+            $order_query = '';
+
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria
-        ON parapentes.id_category_fk = categoria.id_category ORDER BY $sortedby $order");
+        ON parapentes.id_category_fk = categoria.id_category $order_query $order");
         $query->execute();
         $glidersByorder = $query->fetchAll(PDO::FETCH_OBJ);
 
@@ -38,14 +50,34 @@ class gliderApiModel {
         return $glider;
     }
 
-    public function getGlidersByCategory($category) {
+    // public function getGlidersByCategory($category) {
+
+    //     $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
+    //     FROM parapentes JOIN categoria 
+    //     ON parapentes.id_category_fk = categoria.id_category WHERE categoria.type_paraglider = ?");
+    //     $query->execute([$category]);
+    //     $glidersByCategory = $query->fetchAll(PDO::FETCH_OBJ);
+
+    //     return $glidersByCategory;
+    // }
+
+    public function getGlidersByPagination($start, $limit) {
+        $querry = [
+            "$start" => "OFFSET $start"
+        ];
+
+        if (isset($querry[$start]) && $limit) {
+            $start_query = $querry[$start];
+            
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria 
-        ON parapentes.id_category_fk = categoria.id_category WHERE categoria.type_paraglider = ?");
-        $query->execute([$category]);
-        $glidersByCategory = $query->fetchAll(PDO::FETCH_OBJ);
+        ON parapentes.id_category_fk = categoria.id_category LIMIT $limit $start_query");
 
-        return $glidersByCategory;
+        $query->execute([]);
+        $glidersByPagination = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $glidersByPagination;  
+        } 
     }
 
 

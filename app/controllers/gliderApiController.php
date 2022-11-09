@@ -21,16 +21,16 @@ class gliderApiController {
 
     public function getGliders($params = null) {
         // $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
-        
-        // $limit = 2; // limite de velas por pagina
-        // $num_page = '';
+    
         $category= '';
         $sortedby= '';
         $order= '';
+        $start = '';
+        $limit = ''; 
+        
 
         if (array_key_exists('sort', $_GET)) {
             $sortedby = $_GET['sort'];
-            
             if (array_key_exists('order', $_GET)) {
                 $order = $_GET['order'];
                 
@@ -38,13 +38,24 @@ class gliderApiController {
                 $this->view->response($glidersByorder);
             }
         } 
-        if (array_key_exists('category', $_GET)) {
-            $category = $_GET['category'];
+        // if (array_key_exists('category', $_GET)) {
+        //     $category = $_GET['category'];
         
-            $glidersByCategory = $this->model->getGlidersByCategory($category);
-            $this->view->response($glidersByCategory);
+        //     $glidersByCategory = $this->model->getGlidersByCategory($category);
+        //     $this->view->response($glidersByCategory);
 
-        } else {
+        // } 
+        if (array_key_exists('start', $_GET)) {
+            $start = $_GET['start'];
+            
+           if (array_key_exists('limit', $_GET))
+               $limit = $_GET['limit']; 
+
+               $glidersByPagination = $this->model->getGlidersByPagination($start, $limit);
+               $this->view->response($glidersByPagination);
+        }
+
+        else {
 
             $gliders = $this->model->getAll();
             $this->view->response($gliders);
@@ -52,16 +63,27 @@ class gliderApiController {
     } 
         
     public function getGlider($params = null) {
-        // obtengo el id del arreglo de params
         $id = $params[':ID'];
         $glider = $this->model->getGliderById($id);
 
-        // si no existe devuelvo 404
         if ($glider)
             $this->view->response($glider);
         else 
             $this->view->response("El parapente con el id: $id no existe", 404);
     }
+     
+    // public function getGliderComments($params = null) {
+
+    //     if (isset('comentarios', $_GET))
+    //         $id_comment = $params[':ID'];
+    //         $commentById = $this->model->getCommentById($id_comment);
+
+    // if ($commentById)
+    //     $this->view->response($commentById);
+    // else 
+    //     $this->view->response("El comentario con el id: $id_comment no existe", 404);
+
+    // }
 
 
     public function deleteGlider($params = null) {
@@ -72,7 +94,7 @@ class gliderApiController {
             $this->model->delete($id);
             $this->view->response($glider);
         } else 
-            $this->view->response("El parapente con el id=$id no existe", 404);
+            $this->view->response("El parapente con el id: $id no existe", 404);
     }
 
     public function insertGlider($params = null) {
