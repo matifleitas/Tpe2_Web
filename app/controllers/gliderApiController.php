@@ -22,13 +22,12 @@ class gliderApiController {
     public function getGliders($params = null) {
         // $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
     
-        $category= '';
-        $sortedby= '';
-        $order= '';
-        $start = '';
-        $limit = ''; 
+        $categoryby= null;
+        $sortedby= null;
+        $order= null;
+        $start = null;
+        $end = null; 
         
-
         if (array_key_exists('sort', $_GET)) {
             $sortedby = $_GET['sort'];
             if (array_key_exists('order', $_GET)) {
@@ -36,29 +35,31 @@ class gliderApiController {
                 
                 $glidersByorder = $this->model->getGliderByOrder($sortedby, $order);
                 $this->view->response($glidersByorder);
-            }
-        } 
-        // if (array_key_exists('category', $_GET)) {
-        //     $category = $_GET['category'];
-        
-        //     $glidersByCategory = $this->model->getGlidersByCategory($category);
-        //     $this->view->response($glidersByCategory);
-
-        // } 
-        if (array_key_exists('start', $_GET)) {
-            $start = $_GET['start'];
-            
-           if (array_key_exists('limit', $_GET))
-               $limit = $_GET['limit']; 
-
-               $glidersByPagination = $this->model->getGlidersByPagination($start, $limit);
-               $this->view->response($glidersByPagination);
+            } 
+            die();
         }
 
+        if (array_key_exists('category', $_GET)) {
+            $categoryby = $_GET['category'];
+            
+                $glidersbyCategory = $this->model->getGlidersByCategory($categoryby);
+                $this->view->response($glidersbyCategory);
+                die();
+        }
+
+        if (array_key_exists('start', $_GET)) {
+            $start = $_GET['start'];
+           if (array_key_exists('end', $_GET))
+               $end = $_GET['end']; 
+
+               $glidersByPagination = $this->model->getGlidersByPagination($start, $end);
+               $this->view->response($glidersByPagination);
+            
+        }
         else {
 
             $gliders = $this->model->getAll();
-            $this->view->response($gliders);
+            $this->view->response($gliders, 200);
         } 
     } 
         
@@ -100,10 +101,10 @@ class gliderApiController {
     public function insertGlider($params = null) {
         $glider = $this->getData();
 
-        if (empty($glider->name) || empty($glider->description) || empty($glider->difficulty) || empty($glider->price) || empty($glider->id_category_fk))  {
+        if (empty($glider->name) || empty($glider->description) || empty($glider->image) || empty($glider->difficulty) || empty($glider->price))  {
             $this->view->response("Complete los datos", 400);
         } else {
-            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->difficulty, $glider->price, $glider->id_category_fk, $glider->image);
+            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->image, $glider->difficulty, $glider->price);
             $glider = $this->model->getGliderById($id);
             $this->view->response($glider, 201);
         }

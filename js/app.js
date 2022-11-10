@@ -77,28 +77,28 @@ async function deleteGlider(e) {
     }
 }
 
-function showGliders() {
-    let ul = document.querySelector("#glider-list");
-    ul.innerHTML = "";
-    for (const glider of gliders) {
+// function showGliders() {
+//     let ul = document.querySelector("#glider-list");
+//     ul.innerHTML = "";
+//     for (const glider of gliders) {
 
-        let html = `
-            <li class='
-                    list-group-item d-flex justify-content-between align-items-center
-                    ${ glider.finalizada == 1 ? 'finalizada' : ''}
-                '>
-                <span> <b>${glider.name}</b> - ${glider.description} </span>
-                <div class="ml-auto">
-                    ${glider.finalizada != 1 ? `<a href='#' data-glider="${glider.id}" type='button' class='btn btn-success btn-finalize'>Finalizar</a>` : ''}
-                    <a href='#' data-glider="${glider.id}" type='button' class='btn btn-danger btn-delete'>Borrar</a>
-                </div>
-            </li>
-        `;
+//         let html = `
+//             <li class='
+//                     list-group-item d-flex justify-content-between align-items-center
+//                     ${ glider.finalizada == 1 ? 'finalizada' : ''}
+//                 '>
+//                 <span> <b>${glider.name}</b> - ${glider.description} </span>
+//                 <div class="ml-auto">
+//                     ${glider.finalizada != 1 ? `<a href='#' data-glider="${glider.id}" type='button' class='btn btn-success btn-finalize'>Finalizar</a>` : ''}
+//                     <a href='#' data-glider="${glider.id}" type='button' class='btn btn-danger btn-delete'>Borrar</a>
+//                 </div>
+//             </li>
+//         `;
 
-        ul.innerHTML += html;
-    }
+//         ul.innerHTML += html;
+//     }
 
 
-}
+// }
 
 getAll();
