@@ -100,11 +100,11 @@ class gliderApiController {
 
     public function insertGlider($params = null) {
         $glider = $this->getData();
-
-        if (empty($glider->name) || empty($glider->description) || empty($glider->image) || empty($glider->difficulty) || empty($glider->price))  {
+        
+        if (empty($glider->name) || empty($glider->description) || empty($glider->difficulty) || empty($glider->price) || empty($glider->id_category_fk))  {
             $this->view->response("Complete los datos", 400);
         } else {
-            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->image, $glider->difficulty, $glider->price);
+            $id = $this->model->insertGlider($glider->name, $glider->description, $glider->image, $glider->difficulty, $glider->price, $glider->id_category_fk);
             $glider = $this->model->getGliderById($id);
             $this->view->response($glider, 201);
         }

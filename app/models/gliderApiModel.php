@@ -81,9 +81,9 @@ class gliderApiModel {
     }
 
 
-    public function insertGlider($name, $description, $image, $difficulty, $price) {
-        $query = $this->db->prepare("INSERT INTO parapentes (name, description, image, difficulty, price) VALUES (?, ?, ?, ?, ?)");
-        $query->execute([$name, $description, $image, $difficulty, $price]);
+    public function insertGlider($name, $description, $image, $difficulty, $price, $id_category_fk) {
+        $query = $this->db->prepare("INSERT INTO parapentes (name, description, image, difficulty, price, id_category_fk) VALUES (?, ?, ?, ?, ?, ?)");
+        $query->execute([$name, $description, $image, $difficulty, $price, $id_category_fk]);
 
         return $this->db->lastInsertId();
     }
