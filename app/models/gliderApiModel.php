@@ -22,10 +22,11 @@ class gliderApiModel {
     public function getGliderByOrder($sortedby, $order) {
         $querrys = [
             "id_parapente" => "ORDER BY id_parapente",
-            "nombre" => "ORDER BY name",
-            "descripcion" => "ORDER BY description",
-            "dificultad" => "ORDER BY difficulty",
-            "precio" => "ORDER BY price",
+            "name" => "ORDER BY name",
+            "description" => "ORDER BY description",
+            "difficulty" => "ORDER BY difficulty",
+            "price" => "ORDER BY price",
+            "category" => "ORDER BY type_paraglider"
         ];
         if (isset($querrys[$sortedby]))
             $order_query = $querrys[$sortedby];
@@ -81,7 +82,7 @@ class gliderApiModel {
     }
 
 
-    public function insertGlider($name, $description, $image, $difficulty, $price, $id_category_fk) {
+    public function insertGlider($name, $description, $image = NULL, $difficulty, $price, $id_category_fk) {
         $query = $this->db->prepare("INSERT INTO parapentes (name, description, image, difficulty, price, id_category_fk) VALUES (?, ?, ?, ?, ?, ?)");
         $query->execute([$name, $description, $image, $difficulty, $price, $id_category_fk]);
 

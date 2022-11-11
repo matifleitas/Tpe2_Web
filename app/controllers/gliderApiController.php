@@ -34,7 +34,7 @@ class gliderApiController {
                 $order = $_GET['order'];
                 
                 $glidersByorder = $this->model->getGliderByOrder($sortedby, $order);
-                $this->view->response($glidersByorder);
+                $this->view->response($glidersByorder, 200);
             } 
             die();
         }
@@ -43,8 +43,8 @@ class gliderApiController {
             $categoryby = $_GET['category'];
             
                 $glidersbyCategory = $this->model->getGlidersByCategory($categoryby);
-                $this->view->response($glidersbyCategory);
-                die();
+                $this->view->response($glidersbyCategory, 200);   
+                die();  
         }
 
         if (array_key_exists('start', $_GET)) {
@@ -53,8 +53,7 @@ class gliderApiController {
                $end = $_GET['end']; 
 
                $glidersByPagination = $this->model->getGlidersByPagination($start, $end);
-               $this->view->response($glidersByPagination);
-            
+               $this->view->response($glidersByPagination, 200);
         }
         else {
 
