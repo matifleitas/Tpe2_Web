@@ -33,11 +33,26 @@ class gliderApiController {
             if (array_key_exists('order', $_GET)) {
                 $order = $_GET['order'];
                 
-                $glidersByorder = $this->model->getGliderByOrder($sortedby, $order);
-                $this->view->response($glidersByorder, 200);
-            } 
-            die();
+                $querrysByOrder = [
+                    "id" => "ORDER BY id_parapente",
+                    "name" => "ORDER BY name",
+                    "description" => "ORDER BY description",
+                    "difficulty" => "ORDER BY difficulty",
+                    "price" => "ORDER BY price",
+                    "category" => "ORDER BY type_paraglider"
+                ];
+                if (isset($querrysByOrder[$sortedby])&&$order) {
+                    $order_query = $querrysByOrder[$sortedby];
+
+                    $glidersByorder = $this->model->getGliderByOrder($sortedby, $order, $order_query);
+                    $this->view->response($glidersByorder, 200);
+                    die();
+                }
+                else 
+                    $order_query = $this->view->response("Este campo del producto no existe", 404);
+                    die();
         }
+    }
 
         if (array_key_exists('category', $_GET)) {
             $categoryby = $_GET['category'];
@@ -51,7 +66,7 @@ class gliderApiController {
             $start = $_GET['start'];
            if (array_key_exists('end', $_GET))
                $end = $_GET['end']; 
-
+        
                $glidersByPagination = $this->model->getGlidersByPagination($start, $end);
                $this->view->response($glidersByPagination, 200);
         }
@@ -60,7 +75,8 @@ class gliderApiController {
             $gliders = $this->model->getAll();
             $this->view->response($gliders, 200);
         } 
-    } 
+    
+}
         
     public function getGlider($params = null) {
         $id = $params[':ID'];

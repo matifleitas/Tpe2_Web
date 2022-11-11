@@ -19,19 +19,19 @@ class gliderApiModel {
         return $gliders;
     }
 
-    public function getGliderByOrder($sortedby, $order) {
-        $querrys = [
-            "id_parapente" => "ORDER BY id_parapente",
-            "name" => "ORDER BY name",
-            "description" => "ORDER BY description",
-            "difficulty" => "ORDER BY difficulty",
-            "price" => "ORDER BY price",
-            "category" => "ORDER BY type_paraglider"
-        ];
-        if (isset($querrys[$sortedby]))
-            $order_query = $querrys[$sortedby];
-        else 
-            $order_query = '';
+    public function getGliderByOrder($sortedby, $order, $order_query) {
+        // $querrys = [
+        //     "id_parapente" => "ORDER BY id_parapente",
+        //     "name" => "ORDER BY name",
+        //     "description" => "ORDER BY description",
+        //     "difficulty" => "ORDER BY difficulty",
+        //     "price" => "ORDER BY price",
+        //     "category" => "ORDER BY type_paraglider"
+        // ];
+        // if (isset($querrys[$sortedby]))
+        //     $order_query = $querrys[$sortedby];
+        // else 
+        //     $order_query = '';
 
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria
