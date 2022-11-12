@@ -20,18 +20,6 @@ class gliderApiModel {
     }
 
     public function getGliderByOrder($sortedby, $order, $order_query) {
-        // $querrys = [
-        //     "id_parapente" => "ORDER BY id_parapente",
-        //     "name" => "ORDER BY name",
-        //     "description" => "ORDER BY description",
-        //     "difficulty" => "ORDER BY difficulty",
-        //     "price" => "ORDER BY price",
-        //     "category" => "ORDER BY type_paraglider"
-        // ];
-        // if (isset($querrys[$sortedby]))
-        //     $order_query = $querrys[$sortedby];
-        // else 
-        //     $order_query = '';
 
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria
@@ -62,14 +50,8 @@ class gliderApiModel {
         return $glidersbyCategory;
     }
 
-    public function getGlidersByPagination($start, $end) {
-        $querry = [
-            "$start" => "OFFSET $start"
-        ];
+    public function getGlidersByPagination($end, $start_query) {
 
-        if (isset($querry[$start]) && $end) {
-            $start_query = $querry[$start];
-            
         $query = $this->db->prepare("SELECT parapentes.id_parapente, parapentes.name, parapentes.description, parapentes.image, parapentes.difficulty, parapentes.price, categoria.type_paraglider
         FROM parapentes JOIN categoria 
         ON parapentes.id_category_fk = categoria.id_category LIMIT $end $start_query");
@@ -79,8 +61,7 @@ class gliderApiModel {
 
         return $glidersByPagination;  
         } 
-    }
-
+    
 
     public function insertGlider($name, $description, $image = NULL, $difficulty, $price, $id_category_fk) {
         $query = $this->db->prepare("INSERT INTO parapentes (name, description, image, difficulty, price, id_category_fk) VALUES (?, ?, ?, ?, ?, ?)");

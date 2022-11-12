@@ -19,12 +19,10 @@ class gliderApiController {
         return json_decode($this->data);
     }
 
-    public function getGliders($params = null) {
-        // $fields = ['id_parapente', 'name', 'description', 'difficulty', 'id_category', 'image'];
-    
-        $categoryby= null;
-        $sortedby= null;
-        $order= null;
+    public function getGliders($params = null) {    
+        $categoryby = null;
+        $sortedby = null;
+        $order = null;
         $start = null;
         $end = null; 
         
@@ -51,8 +49,8 @@ class gliderApiController {
                 else 
                     $order_query = $this->view->response("Este campo del producto no existe", 404);
                     die();
+            }
         }
-    }
 
         if (array_key_exists('category', $_GET)) {
             $categoryby = $_GET['category'];
@@ -67,11 +65,20 @@ class gliderApiController {
            if (array_key_exists('end', $_GET))
                $end = $_GET['end']; 
         
-               $glidersByPagination = $this->model->getGlidersByPagination($start, $end);
+            $querryStart = [
+                $start => "OFFSET $start"
+            ];
+    
+            if (isset($querryStart[$start]) && $end) {
+                $start_query = $querryStart[$start];
+                
+               $glidersByPagination = $this->model->getGlidersByPagination($end, $start_query);
                $this->view->response($glidersByPagination, 200);
+        } else 
+            $this->view->response("Error al completar los campos", 404);
         }
-        else {
 
+        else {
             $gliders = $this->model->getAll();
             $this->view->response($gliders, 200);
         } 
@@ -87,20 +94,6 @@ class gliderApiController {
         else 
             $this->view->response("El parapente con el id: $id no existe", 404);
     }
-     
-    // public function getGliderComments($params = null) {
-
-    //     if (isset('comentarios', $_GET))
-    //         $id_comment = $params[':ID'];
-    //         $commentById = $this->model->getCommentById($id_comment);
-
-    // if ($commentById)
-    //     $this->view->response($commentById);
-    // else 
-    //     $this->view->response("El comentario con el id: $id_comment no existe", 404);
-
-    // }
-
 
     public function deleteGlider($params = null) {
         $id = $params[':ID'];
@@ -108,7 +101,7 @@ class gliderApiController {
         $glider = $this->model->getGliderById($id);
         if ($glider) {
             $this->model->delete($id);
-            $this->view->response($glider);
+            $this->view->response($glider, 200);
         } else 
             $this->view->response("El parapente con el id: $id no existe", 404);
     }
@@ -124,5 +117,4 @@ class gliderApiController {
             $this->view->response($glider, 201);
         }
     }
-
 }
