@@ -33,11 +33,11 @@ class gliderApiController {
                 
                 $querrysByOrder = [
                     "id" => "ORDER BY id_parapente",
-                    "name" => "ORDER BY name",
-                    "description" => "ORDER BY description",
-                    "difficulty" => "ORDER BY difficulty",
-                    "price" => "ORDER BY price",
-                    "category" => "ORDER BY type_paraglider"
+                    "nombre" => "ORDER BY name",
+                    "descripcion" => "ORDER BY description",
+                    "dificultad" => "ORDER BY difficulty",
+                    "precio" => "ORDER BY price",
+                    "categoria" => "ORDER BY type_paraglider"
                 ];
                 if (isset($querrysByOrder[$sortedby])&&$order) {
                     $order_query = $querrysByOrder[$sortedby];
@@ -75,7 +75,7 @@ class gliderApiController {
                $glidersByPagination = $this->model->getGlidersByPagination($end, $start_query);
                $this->view->response($glidersByPagination, 200);
         } else 
-            $this->view->response("Error al completar los campos", 404);
+            $this->view->response("Error al completar los campos", 400);
         }
 
         else {
@@ -90,7 +90,7 @@ class gliderApiController {
         $glider = $this->model->getGliderById($id);
 
         if ($glider)
-            $this->view->response($glider);
+            $this->view->response($glider, 200);
         else 
             $this->view->response("El parapente con el id: $id no existe", 404);
     }
