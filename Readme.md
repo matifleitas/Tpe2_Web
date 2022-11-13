@@ -40,6 +40,6 @@ Nota: En el caso de que seleccione un valor mayor a la cantidad de productos reg
 
 Para poder llevar a cabo el ordenamiento de los parapentes del sitio se deben agregar los siguientes paramentros de consulta a las solicitudes GET:
 
-                            /gliders?sort=price&order=ASC o DESC
+                            /gliders?sort=precio&order=ASC o DESC
 
 Nota: Se podra elegir cualquier campo de los productos (id, nombre del parapente, descripcion, difficultad, precio o categoria), en el caso de strings se ordenara alfabeticamente. La eleccion de realizarlo de manera ascendente o descendente es de libre eleccion.
