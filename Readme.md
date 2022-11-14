@@ -7,19 +7,19 @@ Los pricipales metodos y recursos a utilizar en la URL para la API son los sigui
 
    METODO	      URL	         	                    RESPUESTA
 
-    GET	      /gliders	   	            Lista de todos los parapentes en venta.
-    GET	      /glider/:ID	            Se muestra parapente seleccionado por id.
-    GET	      /gliders/:ID/comment 	    Se mostraran comentarios de usuarios que compraron      
-                                        articulo seleccionado.
+    GET	      /gliders	   	            • Lista de todos los parapentes en venta.
+    GET	      /glider/:ID	            • Se muestra parapente seleccionado por id.
+    GET	      /gliders/:ID/comment 	    • Se mostraran comentarios de usuarios que compraron      
+                                          articulo seleccionado.
 
 • Metodo POST:
 
-    POST      /gliders                  Se creara un nuevo producto pero previamente se 
-                                        deben completar los datos del parapente a agregar.
+    POST      /gliders                  • Se creara un nuevo producto pero previamente se 
+                                          deben completar los datos del parapente a agregar.
 
 • Metodo DELETE:
 
-    DELETE   /gliders/:ID               El producto seleccionado por id se eliminara del sistema.
+    DELETE   /gliders/:ID               • El producto seleccionado por id se eliminara del sistema.
 
 
 • Filtrado por categoria:

@@ -7,10 +7,6 @@ let gliders = [];
 let form = document.querySelector('#glider-form');
 form.addEventListener('submit', insertGlider);
 
-
-/**
- * Obtiene todas las tareas de la API REST
- */
 async function getAll() {
     try {
         let response = await fetch(URL);
@@ -25,9 +21,6 @@ async function getAll() {
     }
 }
 
-/**
- * Inserta la tarea via API REST
- */
 async function insertGlider(e) {
     e.preventDefault();
     
@@ -35,7 +28,6 @@ async function insertGlider(e) {
     let glider = {
         titulo: data.get('name'),
         descripcion: data.get('description'),
-        // prioridad: data.get('prioridad'),
     };
 
     try {
@@ -50,7 +42,6 @@ async function insertGlider(e) {
 
         let nGlider = await response.json();
 
-        // inserto la tarea nuevo
         gliders.push(nGlider);
         showGliders();
 
@@ -69,36 +60,11 @@ async function deleteGlider(e) {
             throw new Error('Recurso no existe');
         }
 
-        // eliminar la tarea del arreglo global
         gliders = gliders.filter(glider => glider.id != id);
         showGliders();
     } catch(e) {
         console.log(e);
     }
 }
-
-// function showGliders() {
-//     let ul = document.querySelector("#glider-list");
-//     ul.innerHTML = "";
-//     for (const glider of gliders) {
-
-//         let html = `
-//             <li class='
-//                     list-group-item d-flex justify-content-between align-items-center
-//                     ${ glider.finalizada == 1 ? 'finalizada' : ''}
-//                 '>
-//                 <span> <b>${glider.name}</b> - ${glider.description} </span>
-//                 <div class="ml-auto">
-//                     ${glider.finalizada != 1 ? `<a href='#' data-glider="${glider.id}" type='button' class='btn btn-success btn-finalize'>Finalizar</a>` : ''}
-//                     <a href='#' data-glider="${glider.id}" type='button' class='btn btn-danger btn-delete'>Borrar</a>
-//                 </div>
-//             </li>
-//         `;
-
-//         ul.innerHTML += html;
-//     }
-
-
-// }
 
 getAll();

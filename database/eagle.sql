@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2022 a las 13:25:45
+-- Tiempo de generación: 14-11-2022 a las 21:08:45
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -80,7 +80,16 @@ CREATE TABLE `comments_products` (
 --
 
 INSERT INTO `comments_products` (`id_comment`, `name_user`, `comments`, `id_parapente_fk`) VALUES
-(4, 'Juan', 'Me parecion un buen producto', 2);
+(4, 'Juan Gonzales', 'Me parecio un buen producto', 2),
+(5, 'Sergio', 'El producto llego rapido y en buen estado', 6),
+(6, 'Damian Martinez', 'Un parapente muy bueno en mi experiencia', 3),
+(7, 'Matias Ferro', 'Me encanto el material del parapente', 19),
+(8, 'Lucas Ponce', 'Excelente producto', 5),
+(9, 'Tomas Lopez', 'Excelente marca', 9),
+(10, 'Delfina Alberdi', 'Me gusto mucho el producto', 8),
+(11, 'Romina Perez', 'Producto liviano y excelente para el vuelo libre', 4),
+(12, 'Facundo Alem', 'Producto muy bueno para su precio', 10),
+(13, 'Sofia Rodriguez', 'Muy bueno el producto y un material muy liviano', 28);
 
 -- --------------------------------------------------------
 
@@ -167,13 +176,13 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `comments_products`
 --
 ALTER TABLE `comments_products`
-  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_comment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `parapentes`
 --
 ALTER TABLE `parapentes`
-  MODIFY `id_parapente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_parapente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Restricciones para tablas volcadas

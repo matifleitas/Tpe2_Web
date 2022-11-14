@@ -61,7 +61,6 @@ class gliderApiModel {
 
         return $glidersByPagination;  
         } 
-    
 
     public function insertGlider($name, $description, $image = NULL, $difficulty, $price, $id_category_fk) {
         $query = $this->db->prepare("INSERT INTO parapentes (name, description, image, difficulty, price, id_category_fk) VALUES (?, ?, ?, ?, ?, ?)");

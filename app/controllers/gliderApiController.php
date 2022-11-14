@@ -24,8 +24,8 @@ class gliderApiController {
         $sortedby = null;
         $order = null;
         $start = null;
-        $end = null; 
-        
+        $end = null;
+
         if (array_key_exists('sort', $_GET)) {
             $sortedby = $_GET['sort'];
             if (array_key_exists('order', $_GET)) {
@@ -45,7 +45,7 @@ class gliderApiController {
                     $glidersByorder = $this->model->getGliderByOrder($sortedby, $order, $order_query);
                     $this->view->response($glidersByorder, 200);
                     die();
-                }
+               }
                 else 
                     $order_query = $this->view->response("Este campo del producto no existe", 404);
                     die();
@@ -57,7 +57,7 @@ class gliderApiController {
             
                 $glidersbyCategory = $this->model->getGlidersByCategory($categoryby);
                 $this->view->response($glidersbyCategory, 200);   
-                die();  
+                die(); 
         }
 
         if (array_key_exists('start', $_GET)) {
@@ -77,12 +77,11 @@ class gliderApiController {
         } else 
             $this->view->response("Error al completar los campos", 400);
         }
-
+                
         else {
             $gliders = $this->model->getAll();
             $this->view->response($gliders, 200);
         } 
-    
 }
         
     public function getGlider($params = null) {
