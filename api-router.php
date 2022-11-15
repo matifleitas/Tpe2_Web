@@ -12,4 +12,5 @@ $router->addRoute('gliders', 'POST', 'gliderApiController', 'insertGlider');
 $router->addRoute('gliders/:ID/:comment', 'GET', 'commentsApiController', 'getCommentById');
 
 
+
 $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']);
