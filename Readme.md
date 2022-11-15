@@ -46,7 +46,8 @@ Para poder llevar a cabo el ordenamiento de los parapentes del sitio se deben ag
 
 Nota: Se podra elegir cualquier campo de los productos (id, nombre del parapente, descripcion, difficultad, precio o categoria), en el caso de strings se ordenara alfabeticamente. La eleccion de realizarlo de manera ascendente o descendente es de libre eleccion.
 
-• Tags:
+• Tags
+    
     Nombre: sort
         
         Descripcion: Ordenable por los siguientes campos 'id', 'nombre', 'descripcion', 'dificultad', 'precio', 'categoria'.
