@@ -62,6 +62,9 @@ Nota: Se podra elegir cualquier campo de los productos (id, nombre del parapente
     Nombre: end
         Descripcion: Cantidad de items que maximos a mostrar.
 
+    Nombre: category
+        Descripcion: Ordenable por las siguientes categorias de productos 'Acro', 'Tandem', 'Cross Country', 'Speed Flying', 'Speed Riding'.
+
 
 • Responses:      
 
